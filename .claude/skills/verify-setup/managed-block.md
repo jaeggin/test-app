@@ -11,6 +11,6 @@ This project uses the AI Engineering Kit — a spec-driven workflow. Development
 - `spec.md` is **read-only during `/build`** — it is the stable contract.
 - **One working language** for the whole project — the conversation *and* every document the skills write, acceptance criteria included. It is recorded under Key Conventions below.
 
-@.claude/rules/general.md
-@.claude/rules/security.md
+@AGENTS.md
+@AGENTS.md
 <!-- AI-ENG-KIT:END -->
