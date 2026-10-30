@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { STORAGE_KEY, createTasksStore } from './tasks.storage'
 import { useTasks } from './use-tasks'
 
@@ -17,6 +17,10 @@ function setup() {
 
 beforeEach(() => {
   localStorage.clear()
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
 })
 
 describe('useTasks', () => {
@@ -215,7 +219,7 @@ describe('several tabs', () => {
 
 describe('storage problems (AC-21)', () => {
   it('keeps working in memory and reports the storage as unavailable', () => {
-    const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
       throw new DOMException('blocked', 'SecurityError')
     })
     const { result } = setup()
@@ -224,7 +228,6 @@ describe('storage problems (AC-21)', () => {
       result.current.add('Nur im Speicher')
     })
     expect(result.current.tasks.map((task) => task.title)).toEqual(['Nur im Speicher'])
-    setItem.mockRestore()
   })
 
   it('reports unreadable stored data (EC-7)', () => {

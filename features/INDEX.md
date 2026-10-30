@@ -25,7 +25,7 @@
 
 | ID | Feature | Description | Status | Spec | Created |
 |----|---------|-------------|--------|------|---------|
-| PROJ-1 | Aufgaben verwalten | Aufgaben anlegen, abhaken, bearbeiten und löschen; alles bleibt im Browser gespeichert (localStorage). | In Progress | [features/PROJ-1-aufgaben-verwalten/](PROJ-1-aufgaben-verwalten/) | 2026-10-30 |
+| PROJ-1 | Aufgaben verwalten | Aufgaben anlegen, abhaken, bearbeiten und löschen; alles bleibt im Browser gespeichert (localStorage). | In Review | [features/PROJ-1-aufgaben-verwalten/](PROJ-1-aufgaben-verwalten/) | 2026-10-30 |
 | PROJ-2 | Fälligkeitsdatum | Eine Aufgabe kann ein optionales Fälligkeitsdatum haben, das in der Liste sichtbar ist; heutige und überfällige Aufgaben werden markiert. | Roadmap | — | 2026-10-30 |
 | PROJ-3 | Aufgaben filtern | Die Liste lässt sich nach Status filtern: alle, offen, erledigt. | Roadmap | — | 2026-10-30 |
 
