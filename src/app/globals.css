@@ -83,10 +83,10 @@
     --card-foreground: 240 100% 0.2%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 100% 0.2%;
-    --primary: 29 100% 50%;
+    --primary: 29.2 100% 50%;
     --primary-foreground: 240 100% 0.2%;
-    --primary-hover: 29 100% 45%;
-    --primary-active: 29 100% 40%;
+    --primary-hover: 29.2 100% 45%;
+    --primary-active: 29.1 100% 40%;
     --primary-subtle: 30 100% 94.5%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 240 100% 0.2%;
@@ -125,10 +125,10 @@
     --card-foreground: 0 0% 94.9%;
     --popover: 0 0% 11%;
     --popover-foreground: 0 0% 94.9%;
-    --primary: 29 100% 50%;
+    --primary: 29.2 100% 50%;
     --primary-foreground: 240 100% 0.2%;
     --primary-hover: 29 100% 57.5%;
-    --primary-active: 29 100% 45%;
+    --primary-active: 29.2 100% 45%;
     --primary-subtle: 30 62% 10%;
     --secondary: 0 0% 11%;
     --secondary-foreground: 0 0% 94.9%;
@@ -143,7 +143,7 @@
     --destructive-foreground: 0 0% 6.7%;
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 29 100% 50%;
+    --ring: 29.2 100% 50%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;

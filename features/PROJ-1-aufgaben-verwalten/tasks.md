@@ -34,7 +34,7 @@
 
 ## Ebene 6 — Feinschliff
 
-- [ ] T11  Gesamtablauf-Test (anlegen, abhaken, bearbeiten, löschen, rückgängig, Neuladen, zwei Tabs) und ein Durchgang bei 320 px Breite und nur mit Tastatur; Funde werden direkt in den vorhandenen Dateien behoben  · files: src/features/tasks/tasks-view.integration.test.tsx  · → AC-18, AC-19, AC-25, AC-26, EC-3, EC-5, EC-6
+- [x] T11  Gesamtablauf-Test (anlegen, abhaken, bearbeiten, löschen, rückgängig, Neuladen, zwei Tabs) und ein Durchgang bei 320 px Breite und nur mit Tastatur; Funde werden direkt in den vorhandenen Dateien behoben  · files: src/features/tasks/tasks-view.integration.test.tsx  · → AC-18, AC-19, AC-25, AC-26, EC-3, EC-5, EC-6
 
 ## Parallelisierung
 

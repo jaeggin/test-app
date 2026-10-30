@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, type RefObject } from "react"
+import { useEffect, useId, useState, type RefObject } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,6 +15,8 @@ type Props = {
 
 export function TaskComposer({ onAdd, inputRef }: Props) {
   const [error, setError] = useState<string | null>(null)
+  const inputId = useId()
+  const errorId = `${inputId}-error`
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -43,11 +45,11 @@ export function TaskComposer({ onAdd, inputRef }: Props) {
   return (
     <form onSubmit={handleSubmit} noValidate>
       <div className="flex gap-2">
-        <label htmlFor="new-task-input" className="sr-only">
+        <label htmlFor={inputId} className="sr-only">
           Neue Aufgabe
         </label>
         <Input
-          id="new-task-input"
+          id={inputId}
           ref={inputRef}
           type="text"
           name="title"
@@ -55,12 +57,12 @@ export function TaskComposer({ onAdd, inputRef }: Props) {
           maxLength={TITLE_MAX_LENGTH}
           autoComplete="off"
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? "new-task-error" : undefined}
+          aria-describedby={error ? errorId : undefined}
           onChange={() => setError(null)}
         />
         <Button type="submit">Hinzufügen</Button>
       </div>
-      <p id="new-task-error" role="status" className="mt-1 min-h-5 text-sm text-destructive">
+      <p id={errorId} role="status" className="mt-1 min-h-5 text-sm text-destructive">
         {error}
       </p>
     </form>

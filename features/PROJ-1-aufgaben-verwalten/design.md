@@ -190,3 +190,12 @@ none
 ## Open Questions
 
 none
+
+## Umsetzungshinweise (von `/build`, Abweichungen und Ergänzungen zum Design)
+
+- **Farbnamen in `globals.css`:** Das `accent` von shadcn ist eine neutrale Hover-Fläche (Ghost-Knöpfe, Menüs) und trägt deshalb die Farbe «Fläche» (`#F5F5F5` bzw. `#1C1C1C`). Das Jäggin Blau aus dem Design-System heisst im Code `highlight`. Zusätzlich gibt es `primary-hover`, `primary-active`, `primary-subtle` und `muted-icon`. Der Farbton von Orange steht auf 29,2° statt 29°, damit der Browser genau `#FF7C00` rechnet.
+- **Speicherzustand:** `TasksState` hat zwei getrennte Felder statt eines Dreier-Zustands: `storage` (`ok` oder `unavailable`) und `unreadable` (Ja/Nein, gilt nach dem ersten Fund bis zum Neuladen). So bleibt der Hinweis «Gespeicherte Aufgaben konnten nicht gelesen werden.» sichtbar, auch nachdem die erste neue Aufgabe gespeichert wurde.
+- **`TaskComposer`** bekommt das Eingabefeld als `inputRef` vom Elternteil, damit `TasksView` den Fokus nach dem Löschen der letzten Aufgabe zurückgeben kann. Das Feld nutzt eine eigene, eindeutige ID (`useId`).
+- **`TasksView`** hat eine optionale Eigenschaft `store`, über die Tests einen frischen Speicher einsetzen. Im Betrieb wird nichts übergeben.
+- **Fokus:** Nach dem Löschen springt der Fokus auf die nächste Zeile (sonst die vorige, sonst das Eingabefeld); nach «Rückgängig» auf das Kästchen der zurückgekehrten Aufgabe; nach `Enter`/`Esc` beim Bearbeiten auf das Stift-Symbol.
+- **Kästchen:** Randfarbe `muted-foreground` statt Orange, weil Orange auf Weiss nur etwa 2,6:1 hat und ein Bedienelement mindestens 3:1 braucht. Die Trefferfläche ist über einen unsichtbaren Rahmen auf etwa 40 × 40 px erweitert.
