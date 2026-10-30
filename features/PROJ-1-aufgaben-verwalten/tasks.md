@@ -30,7 +30,7 @@
 
 ## Ebene 5 — Zusammenbau
 
-- [ ] T10  Seite zusammensetzen: `TasksView` mit Lade- und Leerzustand, Layout (Sprache, Schrift Inter, Theme, Kopfzeile), Startseite ersetzt die Willkommensseite, mit Test  · files: src/features/tasks/tasks-view.tsx, src/features/tasks/tasks-view.test.tsx, src/app/layout.tsx, src/app/page.tsx  · → AC-1, AC-22, AC-23, AC-24, EC-7
+- [x] T10  Seite zusammensetzen: `TasksView` mit Lade- und Leerzustand, Layout (Sprache, Schrift Inter, Theme, Kopfzeile), Startseite ersetzt die Willkommensseite, mit Test  · files: src/features/tasks/tasks-view.tsx, src/features/tasks/tasks-view.test.tsx, src/app/layout.tsx, src/app/page.tsx  · → AC-1, AC-22, AC-23, AC-24, EC-7
 
 ## Ebene 6 — Feinschliff
 
