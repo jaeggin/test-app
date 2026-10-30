@@ -16,7 +16,9 @@
 
 - Es gibt nur diese eine Entität, und sie hat keine Beziehungen zu anderen.
 - Die Aufgabenliste ist schlicht die Menge aller `tasks`.
+- Die Reihenfolge der Liste (neueste oben) ist Teil der Daten und wird mitgespeichert; es gibt kein eigenes Sortierfeld.
 - Der Filter (alle / offen / erledigt) ist eine Ansicht auf diese Liste und wird nicht gespeichert.
+- Die Aufgaben liegen als ein einziges, versioniertes Dokument im Browser (Details: `features/PROJ-1-aufgaben-verwalten/design.md`).
 
 ## Wer ergänzt was
 

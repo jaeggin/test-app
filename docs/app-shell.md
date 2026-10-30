@@ -31,7 +31,7 @@ Die App hat nur einen Bildschirm, daher gibt es kein eigenes App-Shell-Feature.
 - **Ladezustand:** kurzer Moment, bis die Aufgaben aus dem Browser gelesen sind, mit dezenten Platzhalterflächen. Es gibt keine Server-Wartezeit.
 - **Leerer Zustand:** ein Satz («Noch keine Aufgaben. Schreib die erste.») und Fokus im Eingabefeld, ohne Illustration.
 - **Fehlerzustand:** Wenn localStorage nicht verfügbar ist (z. B. privater Modus oder voller Speicher), erscheint ein sichtbarer Hinweis, dass Änderungen nicht gespeichert werden.
-- **Rückmeldungen:** kurze Hinweise (Toasts) unten mittig, z. B. «Aufgabe gelöscht» mit «Rückgängig».
+- **Rückmeldungen:** eine einzige Hinweisleiste unten mittig (kein Toast-Paket), z. B. «Aufgabe gelöscht» mit «Rückgängig». Im Seitenaufbau steht sie direkt hinter der Liste, damit sie per Tastatur erreichbar ist; sie schliesst sich nach 6 Sekunden.
 
 ## Auth-Zustände
 
@@ -42,6 +42,8 @@ Nicht vorhanden: keine Konten, keine Rollen.
 | Komponente | Datei | Zweck |
 |------------|-------|-------|
 | `AppHeader` | `src/components/app-header.tsx` | Titel und Theme-Umschalter; gebaut von PROJ-1 |
+| `ThemeToggle` | `src/components/theme-toggle.tsx` | Knopf für Hell/Dunkel; gebaut von PROJ-1 |
+| `ThemeProvider` | `src/components/theme-provider.tsx` | Hell/Dunkel für die ganze App, Standard ist die Systemeinstellung; eingehängt in `src/app/layout.tsx` |
 
 ---
 
