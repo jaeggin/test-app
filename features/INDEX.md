@@ -25,8 +25,11 @@
 
 | ID | Feature | Description | Status | Spec | Created |
 |----|---------|-------------|--------|------|---------|
+| PROJ-1 | Aufgaben verwalten | Aufgaben anlegen, abhaken, bearbeiten und löschen; alles bleibt im Browser gespeichert (localStorage). | Roadmap | — | 2026-10-30 |
+| PROJ-2 | Fälligkeitsdatum | Eine Aufgabe kann ein optionales Fälligkeitsdatum haben, das in der Liste sichtbar ist; heutige und überfällige Aufgaben werden markiert. | Roadmap | — | 2026-10-30 |
+| PROJ-3 | Aufgaben filtern | Die Liste lässt sich nach Status filtern: alle, offen, erledigt. | Roadmap | — | 2026-10-30 |
 
-**Build order:** _P0 (MVP): PROJ-1 → PROJ-2 · P1: PROJ-3 (needs PROJ-2) · P2: PROJ-4 (needs PROJ-2) — written by `/init`, kept current by `/refine`_
+**Build order:** P0 (MVP): PROJ-1 → PROJ-2 (needs PROJ-1) → PROJ-3 (needs PROJ-1)
 
 <!-- Add features above this line -->
 
@@ -36,4 +39,4 @@
 
 - _v1.0.0 · 2026-01-31 · https://app.example.com · PROJ-1, PROJ-2_
 
-## Next Available ID: PROJ-1
+## Next Available ID: PROJ-4

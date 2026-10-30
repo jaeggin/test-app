@@ -11,7 +11,7 @@
   "platform": "web",
   "stack": {
     "framework": "nextjs",
-    "backend": null,
+    "backend": "localstorage",
     "test": "vitest",
     "e2e": "playwright",
     "ui": "shadcn",
@@ -32,7 +32,7 @@
   },
   "layers": [],
   "law": null,
-  "quality": null,
+  "quality": "standard",
   "featurePrefix": "PROJ",
   "managed": {
     ".claude/skills": [

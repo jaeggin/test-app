@@ -1,38 +1,36 @@
-# Data Model
+# Datenmodell
 
-> The app-wide map of **what data this product stores and how it connects** — the shared blueprint every feature's tables conform to.
+> Die produktweite Karte von **welche Daten das Produkt speichert und wie sie zusammenhängen** — der gemeinsame Bauplan, dem die Daten jedes Features entsprechen.
 >
-> - Created by `/init` (the first holistic pass: entities + relationships).
-> - Refined by `/architecture` as each feature is designed.
-> - **Altitude:** entities, relationships, and ownership live here (product-level, anyone can read them). Column types, indexes, and exact foreign keys are decided per feature in that feature's `design.md` — not here.
+> - Erstellt von `/init` (erster Gesamtentwurf: Entitäten + Beziehungen).
+> - Verfeinert von `/architecture`, sobald ein Feature entworfen wird.
+> - **Flughöhe:** Entitäten, Beziehungen und Besitz stehen hier (Produktebene). Datentypen und genaue Felder werden pro Feature in dessen `design.md` entschieden — nicht hier.
 
-## Entities
+## Entitäten
 
-_Each entity is a kind of thing the app stores (a real-world noun). List the ones you know so far with a one-line purpose and who owns or can see it. No column types — just the thing and what it's for._
+| Entität | Was sie darstellt | Besitzer / wer sie sieht |
+|---------|-------------------|--------------------------|
+| `tasks` (Aufgabe) | Eine einzelne Aufgabe mit Titel, Erledigt-Status und optionalem Fälligkeitsdatum. | Die Person, die den Browser benutzt. Die Daten liegen nur lokal in diesem Browser (localStorage) und sind für niemand sonst sichtbar. |
 
-| Entity | What it represents | Owned by / who can see it |
-|--------|--------------------|---------------------------|
-| _profiles_ | _A user's account profile_ | _the user themselves_ |
-| _..._ | _..._ | _..._ |
+## Beziehungen
 
-## Relationships
+- Es gibt nur diese eine Entität, und sie hat keine Beziehungen zu anderen.
+- Die Aufgabenliste ist schlicht die Menge aller `tasks`.
+- Der Filter (alle / offen / erledigt) ist eine Ansicht auf diese Liste und wird nicht gespeichert.
 
-_How the entities connect, in plain language. This is where coherence comes from — get the connections right once, up front._
+## Wer ergänzt was
 
-- _A profile has many ..._
-- _Each ... belongs to exactly one ..._
-- _A ... can have many ..._
+- PROJ-1 legt `tasks` an (Titel, Erledigt-Status).
+- PROJ-2 ergänzt das optionale Fälligkeitsdatum.
+- PROJ-3 ändert am Datenmodell nichts, sie filtert nur.
 
-## Diagram (optional)
-
-_A simple text sketch of the model, filled in as it firms up._
+## Diagramm
 
 ```
-profiles
-  └─ owns many ...
-        └─ has many ...
+(Browser-Nutzer:in)
+  └─ besitzt viele tasks   (lokal gespeichert, localStorage)
 ```
 
 ---
 
-_This is a living document. When `/architecture` designs a feature that introduces or changes an entity, it updates this map first, so later features build against an accurate picture. Run `/init` to create the first version from your feature map._
+_Dies ist ein lebendes Dokument. Wenn `/architecture` ein Feature entwirft, das eine Entität einführt oder ändert, aktualisiert es zuerst diese Karte, damit spätere Features auf einem korrekten Bild aufbauen._

@@ -1,24 +1,32 @@
 # Product Requirements Document
 
 ## Vision
-_Describe what you are building and why._
+Eine minimalistische To-Do-Liste für den persönlichen Gebrauch. Aufgaben lassen sich schnell erfassen, abhaken, bearbeiten und nach Status filtern, und jede Aufgabe kann ein Fälligkeitsdatum haben. Die App braucht kein Konto und keine Einrichtung: öffnen und loslegen.
 
 ## Target Users
-_Who will use this product? Describe their needs and pain points._
+Einzelpersonen, die ihre Aufgaben auf einem Gerät im Blick behalten wollen. Sie finden die vorhandenen Tools überladen oder zu anmeldepflichtig. Sie wollen Aufgaben notieren und erledigen, ohne Konto und ohne Ablenkung.
 
 ## Core Features (Roadmap)
 
-_The feature map — every feature's name, one-line description, status and the build order — lives in **`features/INDEX.md`** and only there, so nothing has to be kept in sync. Here, in two or three sentences: what the MVP must do for the product to be usable at all, and what deliberately comes later._
+_Die Feature-Map (Name, Beschreibung, Status, Build-Reihenfolge) steht in **`features/INDEX.md`** und nur dort._
+
+Die erste Version muss Aufgaben anlegen, abhaken, bearbeiten und löschen können und dazu Filter (alle / offen / erledigt) und ein optionales Fälligkeitsdatum bieten. Bewusst später oder gar nicht: Kategorien, Wiederholungen, Erinnerungen, Sortierung per Drag-and-drop, Teilen und Synchronisation zwischen Geräten.
 
 ## Success Metrics
-_How will you measure success? (e.g., user signups, retention, task completion rate)_
+- Eine neue Aufgabe lässt sich in unter 5 Sekunden erfassen (Text tippen, Enter).
+- Die Aufgaben bleiben nach Neuladen und Browser-Neustart erhalten.
+- Alle Kernaktionen sind per Tastatur bedienbar, und die Seite besteht einen Lighthouse-Accessibility-Check mit mindestens 95 Punkten.
 
 ## Constraints
-_Budget, timeline, technical limitations, team size._
+- Tech-Stack: Next.js, Tailwind und shadcn/ui, wie im Projekt-Template.
+- Kein Backend: Daten liegen nur im Browser (localStorage). Keine Konten, keine personenbezogenen Daten auf Servern.
+- Qualitätsstufe: Standard.
+- Design-System: siehe `docs/design-system.md`.
+- Hosting: noch offen, wird bei `/deploy` entschieden.
 
 ## Non-Goals
-_What are you explicitly NOT building in this version?_
+Keine Benutzerkonten, keine Synchronisation zwischen Geräten, keine geteilten Listen, keine Benachrichtigungen, keine Kategorien oder Tags, keine native App.
 
 ---
 
-Run `/init` to set up this PRD and feature map, then `/write-spec` to create detailed feature specifications for each feature in `features/INDEX.md`.
+Nächster Schritt: `/write-spec` für die Features in `features/INDEX.md`.
