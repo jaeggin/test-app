@@ -15,8 +15,8 @@
 
 ## Ebene 2 — Kernlogik
 
-- [ ] T4 [P]  Listenoperationen (anlegen, abhaken, Titel ändern, löschen, wiederherstellen), mit Test  · files: src/features/tasks/tasks.rules.ts, src/features/tasks/tasks.rules.test.ts  · → AC-2, AC-6, AC-7, AC-8, AC-10, AC-13, AC-15, AC-16, EC-4, EC-5
-- [ ] T5 [P]  Browser-Speicher: Kopie im Arbeitsspeicher, Tab-Abgleich, Zustände, Sicherung bei unlesbaren Daten, mit Test  · files: src/features/tasks/tasks.storage.ts, src/features/tasks/tasks.storage.test.ts  · → AC-18, AC-19, AC-21, EC-7
+- [x] T4 [P]  Listenoperationen (anlegen, abhaken, Titel ändern, löschen, wiederherstellen), mit Test  · files: src/features/tasks/tasks.rules.ts, src/features/tasks/tasks.rules.test.ts  · → AC-2, AC-6, AC-7, AC-8, AC-10, AC-13, AC-15, AC-16, EC-4, EC-5
+- [x] T5 [P]  Browser-Speicher: Kopie im Arbeitsspeicher, Tab-Abgleich, Zustände, Sicherung bei unlesbaren Daten, mit Test  · files: src/features/tasks/tasks.storage.ts, src/features/tasks/tasks.storage.test.ts  · → AC-18, AC-19, AC-21, EC-7
 
 ## Ebene 3 — Verbindung
 
