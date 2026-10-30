@@ -85,4 +85,9 @@ describe('TaskComposer', () => {
     setup()
     expect(screen.getByRole('button', { name: 'Hinzufügen' })).toHaveAttribute('type', 'submit')
   })
+
+  it('has a safe native fallback: it posts instead of putting the title into the URL (BUG-3)', () => {
+    const { input } = setup()
+    expect(input.closest('form')).toHaveAttribute('method', 'post')
+  })
 })

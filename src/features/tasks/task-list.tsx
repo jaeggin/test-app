@@ -11,9 +11,17 @@ type Props = {
   onDelete: (id: string) => void
   /** Called when the deleted task was the last one, so keyboard focus is not left behind. */
   onFocusComposer: () => void
+  onEditingChange?: (id: string, editing: boolean) => void
 }
 
-export function TaskList({ tasks, onToggle, onRename, onDelete, onFocusComposer }: Props) {
+export function TaskList({
+  tasks,
+  onToggle,
+  onRename,
+  onDelete,
+  onFocusComposer,
+  onEditingChange,
+}: Props) {
   function handleDelete(id: string) {
     // Move focus to a row that stays, before the deleted one disappears (AC-25).
     const index = tasks.findIndex((task) => task.id === id)
@@ -32,6 +40,7 @@ export function TaskList({ tasks, onToggle, onRename, onDelete, onFocusComposer 
           onToggle={onToggle}
           onRename={onRename}
           onDelete={handleDelete}
+          onEditingChange={onEditingChange}
         />
       ))}
     </ul>

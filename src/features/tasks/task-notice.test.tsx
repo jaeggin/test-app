@@ -92,4 +92,98 @@ describe('TaskNotice', () => {
     })
     expect(onDismiss).not.toHaveBeenCalled()
   })
+
+  describe('keyboard (AC-25, BUG-2)', () => {
+    it('undoes with Ctrl+Z and closes the notice', () => {
+      const run = vi.fn()
+      const onDismiss = vi.fn()
+      render(<TaskNotice notice={deleted(run)} onDismiss={onDismiss} />)
+      fireEvent.keyDown(document.body, { key: 'z', ctrlKey: true })
+      expect(run).toHaveBeenCalledTimes(1)
+      expect(onDismiss).toHaveBeenCalledTimes(1)
+    })
+
+    it('undoes with Cmd+Z too', () => {
+      const run = vi.fn()
+      render(<TaskNotice notice={deleted(run)} onDismiss={() => {}} />)
+      fireEvent.keyDown(document.body, { key: 'z', metaKey: true })
+      expect(run).toHaveBeenCalledTimes(1)
+    })
+
+    it('leaves Ctrl+Z alone inside a text field, where it undoes typing', () => {
+      const run = vi.fn()
+      render(
+        <>
+          <input aria-label="Feld" />
+          <TaskNotice notice={deleted(run)} onDismiss={() => {}} />
+        </>,
+      )
+      fireEvent.keyDown(screen.getByLabelText('Feld'), { key: 'z', ctrlKey: true })
+      expect(run).not.toHaveBeenCalled()
+    })
+
+    it('ignores plain "z", Ctrl+Shift+Z and a notice without an action', () => {
+      const run = vi.fn()
+      const { rerender } = render(<TaskNotice notice={deleted(run)} onDismiss={() => {}} />)
+      fireEvent.keyDown(document.body, { key: 'z' })
+      fireEvent.keyDown(document.body, { key: 'z', ctrlKey: true, shiftKey: true })
+      expect(run).not.toHaveBeenCalled()
+
+      rerender(<TaskNotice notice={{ id: 5, message: 'Nur Info' }} onDismiss={() => {}} />)
+      fireEvent.keyDown(document.body, { key: 'z', ctrlKey: true })
+      expect(run).not.toHaveBeenCalled()
+    })
+
+    it('stops listening once the notice is gone', () => {
+      const run = vi.fn()
+      const { rerender } = render(<TaskNotice notice={deleted(run)} onDismiss={() => {}} />)
+      rerender(<TaskNotice notice={null} onDismiss={() => {}} />)
+      fireEvent.keyDown(document.body, { key: 'z', ctrlKey: true })
+      expect(run).not.toHaveBeenCalled()
+    })
+
+    it('does not run out while the button has focus, and starts the 6 seconds again after it', () => {
+      const onDismiss = vi.fn()
+      render(<TaskNotice notice={deleted()} onDismiss={onDismiss} />)
+      const button = screen.getByRole('button', { name: 'Rückgängig' })
+
+      act(() => {
+        button.focus()
+      })
+      act(() => {
+        vi.advanceTimersByTime(20000)
+      })
+      expect(onDismiss).not.toHaveBeenCalled()
+
+      act(() => {
+        button.blur()
+      })
+      act(() => {
+        vi.advanceTimersByTime(5999)
+      })
+      expect(onDismiss).not.toHaveBeenCalled()
+      act(() => {
+        vi.advanceTimersByTime(1)
+      })
+      expect(onDismiss).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not run out while the pointer is over it', () => {
+      const onDismiss = vi.fn()
+      render(<TaskNotice notice={deleted()} onDismiss={onDismiss} />)
+      const bar = screen.getByText('Aufgabe gelöscht').parentElement!
+
+      fireEvent.mouseEnter(bar)
+      act(() => {
+        vi.advanceTimersByTime(20000)
+      })
+      expect(onDismiss).not.toHaveBeenCalled()
+
+      fireEvent.mouseLeave(bar)
+      act(() => {
+        vi.advanceTimersByTime(6000)
+      })
+      expect(onDismiss).toHaveBeenCalledTimes(1)
+    })
+  })
 })

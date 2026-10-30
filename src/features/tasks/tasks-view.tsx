@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { StorageAlert } from "./storage-alert"
@@ -19,12 +19,30 @@ export function TasksView({ store }: { store?: TasksStore }) {
   const noticeCount = useRef(0)
   const [notice, setNotice] = useState<Notice | null>(null)
 
+  // The task whose title field is open right now, if any (EC-4).
+  const editingId = useRef<string | null>(null)
+
   const dismissNotice = useCallback(() => setNotice(null), [])
 
-  function showNotice(message: string, action?: Notice["action"]) {
+  const showNotice = useCallback((message: string, action?: Notice["action"]) => {
     noticeCount.current += 1
     setNotice({ id: noticeCount.current, message, action })
-  }
+  }, [])
+
+  // Another tab can delete the task under an open edit field; the field then vanishes with the
+  // row, so say why instead of letting the typed text disappear silently.
+  useEffect(() => {
+    const id = editingId.current
+    if (loaded && id && !tasks.some((task) => task.id === id)) {
+      editingId.current = null
+      showNotice(GONE_MESSAGE)
+    }
+  }, [loaded, tasks, showNotice])
+
+  const handleEditingChange = useCallback((id: string, editing: boolean) => {
+    if (editing) editingId.current = id
+    else if (editingId.current === id) editingId.current = null
+  }, [])
 
   function handleToggle(id: string) {
     if (!toggle(id).ok) showNotice(GONE_MESSAGE)
@@ -37,6 +55,8 @@ export function TasksView({ store }: { store?: TasksStore }) {
   }
 
   function handleDelete(id: string) {
+    // Deleting the task you are editing yourself is not a surprise worth a notice.
+    if (editingId.current === id) editingId.current = null
     const result = remove(id)
     if (!result.ok) {
       showNotice(GONE_MESSAGE)
@@ -72,6 +92,7 @@ export function TasksView({ store }: { store?: TasksStore }) {
           onRename={handleRename}
           onDelete={handleDelete}
           onFocusComposer={() => composerRef.current?.focus()}
+          onEditingChange={handleEditingChange}
         />
       )}
 

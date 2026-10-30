@@ -212,3 +212,82 @@ describe('other tabs', () => {
     expect(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}').tasks).toEqual([])
   })
 })
+
+describe('editing while another tab deletes the task (EC-4, BUG-1)', () => {
+  function startEditing(title: string) {
+    fireEvent.click(screen.getByRole('button', { name: `Aufgabe „${title}“ bearbeiten` }))
+    const field = screen.getByRole('textbox', { name: /bearbeiten/ })
+    fireEvent.change(field, { target: { value: 'Neu getippt' } })
+  }
+
+  function otherTabDeletesEverything() {
+    act(() => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, tasks: [] }))
+      window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }))
+    })
+  }
+
+  it('tells the person, instead of letting the field vanish silently', () => {
+    renderView()
+    addTask('Erste')
+    startEditing('Erste')
+
+    otherTabDeletesEverything()
+
+    expect(screen.getByText('Diese Aufgabe existiert nicht mehr.')).toBeInTheDocument()
+    expect(screen.queryByRole('textbox', { name: /bearbeiten/ })).not.toBeInTheDocument()
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}').tasks).toEqual([])
+  })
+
+  it('stays quiet when another tab deletes a different task', () => {
+    renderView()
+    addTask('Erste')
+    addTask('Zweite')
+    startEditing('Erste')
+
+    act(() => {
+      const doc = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}')
+      doc.tasks = doc.tasks.filter((task: { title: string }) => task.title !== 'Zweite')
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(doc))
+      window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }))
+    })
+
+    expect(screen.queryByText('Diese Aufgabe existiert nicht mehr.')).not.toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /bearbeiten/ })).toBeInTheDocument()
+  })
+
+  it('stays quiet when the person finishes editing normally', () => {
+    renderView()
+    addTask('Erste')
+    startEditing('Erste')
+    fireEvent.keyDown(screen.getByRole('textbox', { name: /bearbeiten/ }), { key: 'Enter' })
+    otherTabDeletesEverything()
+    expect(screen.queryByText('Diese Aufgabe existiert nicht mehr.')).not.toBeInTheDocument()
+  })
+
+  it('stays quiet when the person deletes the task they are editing themselves', () => {
+    renderView()
+    addTask('Erste')
+    startEditing('Erste')
+    fireEvent.click(screen.getByRole('button', { name: 'Aufgabe „Erste“ löschen' }))
+    expect(screen.getByText('Aufgabe gelöscht')).toBeInTheDocument()
+    expect(screen.queryByText('Diese Aufgabe existiert nicht mehr.')).not.toBeInTheDocument()
+  })
+})
+
+describe('undo by keyboard (AC-25, BUG-2)', () => {
+  it('restores the deleted task with Ctrl+Z, wherever the focus is in the list', async () => {
+    renderView()
+    for (const title of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']) addTask(title)
+    fireEvent.click(screen.getByRole('button', { name: 'Aufgabe „H“ löschen' }))
+    expect(titles()).not.toContain('H')
+
+    fireEvent.keyDown(document.body, { key: 'z', ctrlKey: true })
+
+    expect(titles()).toContain('H')
+    await vi.waitFor(() =>
+      expect(screen.getByRole('checkbox', { name: 'Aufgabe „H“ erledigt' })).toHaveFocus(),
+    )
+    expect(screen.queryByText('Aufgabe gelöscht')).not.toBeInTheDocument()
+  })
+})

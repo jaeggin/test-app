@@ -1,4 +1,5 @@
 import { act, render } from '@testing-library/react'
+import { useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ThemeProvider } from './theme-provider'
@@ -19,7 +20,10 @@ function stubSystemTheme(dark: boolean) {
 let setThemeFromChild: (theme: string) => void = () => {}
 
 function Probe() {
-  setThemeFromChild = useTheme().setTheme
+  const { setTheme } = useTheme()
+  useEffect(() => {
+    setThemeFromChild = setTheme
+  }, [setTheme])
   return null
 }
 

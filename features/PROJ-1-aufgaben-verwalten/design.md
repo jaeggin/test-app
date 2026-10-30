@@ -199,3 +199,11 @@ none
 - **`TasksView`** hat eine optionale Eigenschaft `store`, über die Tests einen frischen Speicher einsetzen. Im Betrieb wird nichts übergeben.
 - **Fokus:** Nach dem Löschen springt der Fokus auf die nächste Zeile (sonst die vorige, sonst das Eingabefeld); nach «Rückgängig» auf das Kästchen der zurückgekehrten Aufgabe; nach `Enter`/`Esc` beim Bearbeiten auf das Stift-Symbol.
 - **Kästchen:** Randfarbe `muted-foreground` statt Orange, weil Orange auf Weiss nur etwa 2,6:1 hat und ein Bedienelement mindestens 3:1 braucht. Die Trefferfläche ist über einen unsichtbaren Rahmen auf etwa 40 × 40 px erweitert.
+
+### Nachträge nach `/qa` (Bugfixes BUG-1 bis BUG-5)
+
+- **Rückgängig per Tastatur (BUG-2):** Zusätzlich zum Knopf löst `Strg+Z` / `⌘Z` «Rückgängig» aus, solange die Hinweisleiste eine Aktion trägt und der Fokus in keinem Textfeld steht (dort bleibt das normale Rückgängig des Browsers). Die 6 Sekunden laufen nicht ab, solange die Leiste den Fokus oder den Mauszeiger hat; danach beginnen sie von neuem.
+- **Bearbeitungsfeld und anderer Tab (BUG-1):** `TasksView` merkt sich, welche Aufgabe gerade bearbeitet wird (`TaskItem` meldet das über `onEditingChange`). Verschwindet genau diese Aufgabe durch einen Abgleich mit einem anderen Tab, erscheint «Diese Aufgabe existiert nicht mehr.». Löscht die Person die Aufgabe selbst oder schliesst das Bearbeiten ab, bleibt es still.
+- **Formular ohne JavaScript (BUG-3):** Das Aufgabenformular trägt `method="post"`. Wird es vor dem Laden der Skripte abgeschickt, steht der Titel nicht mehr in der URL.
+- **Security-Header (BUG-4):** `next.config.ts` setzt `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` und `Strict-Transport-Security` auf jeder Route und schaltet `X-Powered-By` ab. Vorlage: `docs/stacks/framework-nextjs.md`. Am Live-URL ist es bei `/deploy` noch einmal zu prüfen, ein Host kann Header ändern.
+- **Test für das doppelte Beenden (BUG-5):** Die Tests lösen `Enter` oder `Esc` und das `blur` in einem gemeinsamen `act()` aus, damit das Feld noch eingehängt ist, wenn das `blur` eintrifft. Ohne den Schutz in `task-item.tsx` schlagen sie jetzt an.

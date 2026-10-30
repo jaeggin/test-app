@@ -43,7 +43,7 @@ export function TaskComposer({ onAdd, inputRef }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form method="post" onSubmit={handleSubmit} noValidate>
       <div className="flex gap-2">
         <label htmlFor={inputId} className="sr-only">
           Neue Aufgabe

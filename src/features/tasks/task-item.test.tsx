@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { TaskItem } from './task-item'
 import type { Task } from './tasks.schema'
@@ -110,22 +110,28 @@ describe('TaskItem editing', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
-  it('saves only once when Enter is followed by a blur (AC-10)', () => {
+  // A browser may fire blur while the field is being removed. Batching both events in one act()
+  // keeps the field mounted when the blur arrives, which is what makes the guard testable.
+  it('saves only once when a blur arrives right after Enter (AC-10)', () => {
     const { onRename } = setup()
     fireEvent.click(editButton('Anrufen'))
     const input = screen.getByRole('textbox')
-    fireEvent.keyDown(input, { key: 'Enter' })
-    fireEvent.blur(input)
+    act(() => {
+      fireEvent.keyDown(input, { key: 'Enter' })
+      fireEvent.blur(input)
+    })
     expect(onRename).toHaveBeenCalledTimes(1)
   })
 
-  it('discards with Esc and keeps the old title (AC-11)', () => {
+  it('discards with Esc and keeps the old title, even if a blur arrives right after (AC-11)', () => {
     const { onRename } = setup()
     fireEvent.click(editButton('Anrufen'))
     const input = screen.getByRole('textbox')
     fireEvent.change(input, { target: { value: 'Verworfen' } })
-    fireEvent.keyDown(input, { key: 'Escape' })
-    fireEvent.blur(input)
+    act(() => {
+      fireEvent.keyDown(input, { key: 'Escape' })
+      fireEvent.blur(input)
+    })
     expect(onRename).not.toHaveBeenCalled()
     expect(screen.getByText('Anrufen')).toBeInTheDocument()
   })

@@ -17,9 +17,11 @@ type Props = {
   onToggle: (id: string) => void
   onRename: (id: string, title: string) => ActionResult
   onDelete: (id: string) => void
+  /** Lets the parent notice when a task vanishes underneath an open edit field (EC-4). */
+  onEditingChange?: (id: string, editing: boolean) => void
 }
 
-export function TaskItem({ task, onToggle, onRename, onDelete }: Props) {
+export function TaskItem({ task, onToggle, onRename, onDelete, onEditingChange }: Props) {
   const [editing, setEditing] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -27,6 +29,10 @@ export function TaskItem({ task, onToggle, onRename, onDelete }: Props) {
   // Enter/Esc unmount the field, which can still fire a blur: only the first finish counts.
   const finishedRef = useRef(false)
   const restoreFocusRef = useRef(false)
+
+  useEffect(() => {
+    onEditingChange?.(task.id, editing)
+  }, [editing, task.id, onEditingChange])
 
   useEffect(() => {
     if (editing) {
