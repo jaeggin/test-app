@@ -20,7 +20,7 @@
 
 ## Ebene 3 — Verbindung
 
-- [ ] T6  Hook `use-tasks`: frisch lesen, ändern, schreiben; Rückgängig, Ladezustand, Speicherzustand, mit Test  · files: src/features/tasks/use-tasks.ts, src/features/tasks/use-tasks.test.tsx  · → AC-2, AC-7, AC-8, AC-10, AC-15, AC-16, AC-17, AC-18, AC-19, AC-20, AC-21, EC-4, EC-5, EC-6
+- [x] T6  Hook `use-tasks`: frisch lesen, ändern, schreiben; Rückgängig, Ladezustand, Speicherzustand, mit Test  · files: src/features/tasks/use-tasks.ts, src/features/tasks/use-tasks.test.tsx  · → AC-2, AC-7, AC-8, AC-10, AC-15, AC-16, AC-17, AC-18, AC-19, AC-20, AC-21, EC-4, EC-5, EC-6
 
 ## Ebene 4 — Oberflächen-Bausteine
 
