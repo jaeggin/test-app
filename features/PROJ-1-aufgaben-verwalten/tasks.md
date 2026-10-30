@@ -24,9 +24,9 @@
 
 ## Ebene 4 — Oberflächen-Bausteine
 
-- [ ] T7 [P]  Eingabefeld mit Hinzufügen-Knopf und Hinweis bei leerem Titel, mit Test  · files: src/features/tasks/task-composer.tsx, src/features/tasks/task-composer.test.tsx  · → AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-25, EC-3
-- [ ] T8 [P]  Liste und Zeile mit Kästchen, Inline-Bearbeiten, Löschen, mit Tests  · files: src/features/tasks/task-list.tsx, src/features/tasks/task-list.test.tsx, src/features/tasks/task-item.tsx, src/features/tasks/task-item.test.tsx  · → AC-7, AC-8, AC-9, AC-10, AC-11, AC-12, AC-13, AC-14, AC-25, AC-26, EC-1, EC-2
-- [ ] T9 [P]  Hinweisleiste (Rückgängig, «Aufgabe existiert nicht mehr») und Speicher-Hinweis, mit Tests  · files: src/features/tasks/task-notice.tsx, src/features/tasks/task-notice.test.tsx, src/features/tasks/storage-alert.tsx, src/features/tasks/storage-alert.test.tsx  · → AC-15, AC-16, AC-17, AC-21, AC-25, EC-4, EC-5, EC-7
+- [x] T7 [P]  Eingabefeld mit Hinzufügen-Knopf und Hinweis bei leerem Titel, mit Test  · files: src/features/tasks/task-composer.tsx, src/features/tasks/task-composer.test.tsx  · → AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-25, EC-3
+- [x] T8 [P]  Liste und Zeile mit Kästchen, Inline-Bearbeiten, Löschen, mit Tests  · files: src/features/tasks/task-list.tsx, src/features/tasks/task-list.test.tsx, src/features/tasks/task-item.tsx, src/features/tasks/task-item.test.tsx  · → AC-7, AC-8, AC-9, AC-10, AC-11, AC-12, AC-13, AC-14, AC-25, AC-26, EC-1, EC-2
+- [x] T9 [P]  Hinweisleiste (Rückgängig, «Aufgabe existiert nicht mehr») und Speicher-Hinweis, mit Tests  · files: src/features/tasks/task-notice.tsx, src/features/tasks/task-notice.test.tsx, src/features/tasks/storage-alert.tsx, src/features/tasks/storage-alert.test.tsx  · → AC-15, AC-16, AC-17, AC-21, AC-25, EC-4, EC-5, EC-7
 
 ## Ebene 5 — Zusammenbau
 
