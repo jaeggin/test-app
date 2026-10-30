@@ -9,9 +9,9 @@
 
 ## Ebene 1 — Fundament
 
-- [ ] T1 [P]  Titel-Regel und Datenformat prüfen, mit Test  · files: src/features/tasks/tasks.schema.ts, src/features/tasks/tasks.schema.test.ts  · → AC-3, AC-4, AC-5, AC-12, EC-7
-- [ ] T2 [P]  Farben, Rundung, Fokusring und Zusatzfarben aus dem Design-System (Hell und Dunkel)  · files: src/app/globals.css  · → AC-24, AC-25
-- [ ] T3 [P]  Hell/Dunkel-Umschaltung und Kopfzeile, mit Test  · files: src/components/theme-provider.tsx, src/components/theme-toggle.tsx, src/components/app-header.tsx, src/components/theme-toggle.test.tsx  · → AC-24, AC-26
+- [x] T1 [P]  Titel-Regel und Datenformat prüfen, mit Test  · files: src/features/tasks/tasks.schema.ts, src/features/tasks/tasks.schema.test.ts  · → AC-3, AC-4, AC-5, AC-12, EC-7
+- [x] T2 [P]  Farben, Rundung, Fokusring und Zusatzfarben aus dem Design-System (Hell und Dunkel)  · files: src/app/globals.css  · → AC-24, AC-25
+- [x] T3 [P]  Hell/Dunkel-Umschaltung und Kopfzeile, mit Test  · files: src/components/theme-provider.tsx, src/components/theme-toggle.tsx, src/components/app-header.tsx, src/components/theme-toggle.test.tsx  · → AC-24, AC-26
 
 ## Ebene 2 — Kernlogik
 
