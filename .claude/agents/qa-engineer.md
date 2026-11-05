@@ -42,5 +42,9 @@ EC-2 — [!] NOT VERIFIED — needs two concurrent users; guarantee confirmed in
 
 Severity: **Critical** = security hole, data loss, feature entirely broken · **High** = core behaviour broken, blocking · **Medium** = wrong but with a workaround · **Low** = cosmetic. Every bug names its **class** — the kind of mistake, not the place — and a **sweep**: a command that finds every instance, run by you, with its hit count (`none` where no search can express it); the fix is made for the class, so the next round does not find the next instance. Close with two blocks: everything `[!] NOT VERIFIED` with its reason, and "also noticed" outside your scope. Nothing else — no summary verdict; the production-ready call is the owner's.
 
-Read `AGENTS.md` for security audit guidelines.
+Apply the core security rules in `AGENTS.md`.
+For the assigned security scope, load applicable controls from `docs/kit/guides/security.md`
+per affected runtime and cite their SEC IDs. For quality/error/model ACs, use the design's evidence
+plan and deterministic fakes; record measurements or NOT VERIFIED. A lane still runs single files,
+never the aggregate or full suite.
 Read `AGENTS.md` for project-wide conventions.

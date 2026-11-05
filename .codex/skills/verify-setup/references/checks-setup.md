@@ -20,7 +20,7 @@ custom definitions. It never installs packages, runs the check or edits `.ai-eng
    explicitly. Do not remove the existing file/script to make the helper pass.
 5. Run the project's dependency install if a dependency was added, then `test:structure` once
    when structure was adopted. Its allowed and forbidden fixtures must behave as documented.
-   Hand off to `/init checks` to record the command and layer coverage. An already authorized
+   Hand off to `/init checks` to record the command, runtime and stage coverage. An already authorized
    concrete adoption does not require another permission question for the same changes.
 
 Setup does not run the aggregate after each repair. `/build` owns its once-at-the-end invocation.

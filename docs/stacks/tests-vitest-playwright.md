@@ -87,4 +87,19 @@ _Reached from `/qa` step 6._
 - Mock only external dependencies — `localStorage`, `fetch`, the clock. Never mock the logic under
   test; a test that mocks its own subject passes for the wrong reason.
 - Cover the happy path **and** the failure paths: corrupt input, empty state, a rejected promise.
-- Run `npm test` to confirm they pass. "Should pass" is not "passes".
+- Run the specific test file to confirm it passes; the QA owner already ran the suite once.
+  New/changed tests do not trigger another full suite. "Should pass" is not "passes".
+
+## Testing server-only modules (Next.js only)
+
+When `stack.framework: nextjs`, keep `import 'server-only'` in data/credential modules. Plain
+Vitest runs outside Next.js and may reject that marker. In the **specific server-module test file**,
+mock only the marker, e.g. `vi.mock('server-only', () => ({}))`, and fake external SDK/I/O dependencies
+or inject the design's adapter. Keep the subject's logic real. Do not remove the production marker,
+globally alias it away, or set `react-server` resolution for all client/React tests.
+
+This test-only mock proves behavior, not the client/server import boundary. Next's production
+build remains the boundary check. When that boundary/configuration changes, one isolated negative
+probe (a Client Component importing a marked module must fail the real build) validates it; remove
+the fixture afterwards. Do not repeat a full build after each unit-test edit or inside QA lanes.
+Other frameworks use their own server boundary; do not add this marker to them.

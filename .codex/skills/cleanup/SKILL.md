@@ -49,13 +49,13 @@ Look for exactly these. This list is exhaustive — do not extend it on your own
 
 **`spec.md`**
 - **Open Questions that are resolved.** A question is resolved when its answer is visible elsewhere: an AC now covers it, a decision records it, or the shipped feature plainly answers it. Remove the question. If the answer is *only* in the question, fold it into the relevant AC or decision **first**, then remove — losing the answer is not cleanup.
-- **Product Decisions that a later decision overruled.** Remove the superseded entry; keep the one that won.
+- **Product Decisions that a later decision overruled.** Mark the old entry Superseded and link its replacement; retain its reason and consequences. Do not erase why a previous choice was made.
 - **Nothing else.** ACs, edge cases, user stories, Out of Scope, and dependencies all stay.
 
 **`design.md`**
 - **Open Questions that are resolved** — same test as above.
-- **The Technical Decisions table.** Compact it, do not empty it: keep **Decision** and **Rationale** for every entry, drop the **Alternative considered**, **Trade-off**, and **Date** columns once the feature is live and the alternative is no longer a live option. The *what* and the *why* always survive.
-- **Superseded technical decisions** — remove outright; these are the ones that actively mislead, and removing them is the most valuable thing this skill does.
+- **The Technical Decisions table.** Shorten repeated prose, retaining the decision, rationale, alternatives, trade-offs/consequences and date. A rejected alternative explains what must not be casually reintroduced. Never drop those facts to save lines.
+- **Superseded technical decisions** — mark Superseded and link the replacement. Preserve the original context; a clear status prevents misleading readers without deleting knowledge. Project-wide entries in `docs/decisions.md` follow the same rule; link them instead of copying their bodies into each feature.
 - Never touch the component structure, data model, or access rules — `/build` and future features read those.
 
 **`qa-report.md`**
@@ -85,11 +85,11 @@ PROJ-2 — Task List
   spec.md
     · Remove open question "Should tasks be sortable?" — answered by AC-4, which
       specifies drag & drop.
-    · Remove decision "Store as flat array" — overruled by "Store keyed by ID"
-      two rows below.
+    · Mark "Store as flat array" Superseded and link "Store keyed by ID";
+      keep the original reason and consequences.
   design.md
-    · Compact 6 technical decisions to Decision + Rationale (removes the
-      alternatives and trade-off columns; every decision and its why stays).
+    · Shorten repeated prose in 6 technical decisions while retaining rationale,
+      rejected alternatives, consequences and date. Link shared ADRs once.
   qa-report.md
     · Condense 3 fixed bugs to one line each (BUG-1, BUG-2, BUG-4).
 
@@ -125,7 +125,7 @@ That is a complete answer. Do not pad it.
 - [ ] Every in-scope feature folder read in full before any judgment
 - [ ] Only the candidate types above considered — no self-invented categories
 - [ ] Answers folded into an AC or decision before the question carrying them was removed
-- [ ] Technical decisions compacted (Decision + Rationale kept), not emptied
+- [ ] Decisions retain rationale, alternatives and consequences; superseded entries link replacements
 - [ ] Fixed bugs condensed to one line; unconfirmed fixes left in full
 - [ ] "Not Verified In This Run" section untouched
 - [ ] Uncertain items flagged for the user instead of decided

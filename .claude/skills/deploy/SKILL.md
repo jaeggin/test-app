@@ -87,10 +87,14 @@ Everything below operates on **the launch set** — one or many. Where a step sa
 ## Workflow
 
 ### 1. Pre-Deployment Checks
-Run these with the project's own commands, from `.ai-eng-kit` → `commands`. A `null` there means nobody recorded that command — ask for it rather than skipping the check or guessing at `npm run build`.
+Read `docs/kit/guides/checks.md` and resolve its complete closing plan for all runtimes, once for
+the launch set. Run the aggregate and only missing stages/layers, sequentially and fail-fast.
+Do not run build/tests again after a passing aggregate that covers them. A null command/coverage
+needs `/init checks`; it is not permission to skip. If `stack.ci: github-actions`, also read
+`docs/stacks/ci-github-actions.md` for exact-commit evidence and required-check handling.
 
-- [ ] The project builds — `commands.build`
-- [ ] Linting passes, where the project has it — `commands.lint`
+- [ ] The complete closing plan passes (lint, required type/structure checks, tests and build), or
+  the configured CI proves that same plan on the exact candidate commit as described in its pack
 - [ ] QA Engineer has approved every feature in the set (check each `features/PROJ-X-*/qa-report.md`)
 - [ ] No Critical/High bugs in those reports
 - [ ] **Every `[user]` task in each feature's `tasks.md` is ticked.** Those are settings in a provider's dashboard — a rate limit, a CAPTCHA, a sending limit — and they exist only where someone made them: a throttle set in the local `config.toml` does not reach the hosted project by itself. An open one is a stop, not a note; list it with its `where:` and wait. A feature with no `tasks.md` at all — reconstructed from code, or migrated from the Starter Kit — has nothing to tick here: skip it, and never report the missing file as a blocker. **`[user go-live]` tasks are the one exception:** they need the production URL or the host, so they are open here by design — Step 2 makes them, Step 4 verifies them. Collect them now; this pre-flight does not stop on them
@@ -131,6 +135,10 @@ Four things hold no matter what database this project uses, and they are the rea
 **The concrete procedure:** read `stack.backend` from `.ai-eng-kit`. If `docs/stacks/backend-<value>.md` exists, follow it — it carries this database's commands, its migration ledger, and the environment strategies. If there is none, **ask the user how schema reaches production in this project** and follow that. Never translate another stack's commands into a guess about theirs; a wrong command against a production database is not a mistake the user can see coming.
 
 ### 3. Merge to `main` & Deploy
+Any integration/merge that changes the verified release tree needs the complete closing plan on
+that candidate before pushing `main`. Resolve conflicts first; do not rely on green checks from
+the feature head to prove a different merge result. With CI, use the pack's candidate-commit gate.
+
 Each feature was built and tested on its own branch (`feat/PROJ-X-name`). Merging into `main` is the **go-live moment** — your host auto-deploys whatever lands on `main`. You perform the merge(s), but only after the user confirms. **Push `main` only once, after all branches in the set are merged**, so the launch is a single build.
 
 #### First: take stock of every branch

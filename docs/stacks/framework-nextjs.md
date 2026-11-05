@@ -106,7 +106,7 @@ References: [Next.js data security](https://nextjs.org/docs/app/guides/data-secu
 
 ## Submitting a form that carries credentials
 
-_Reached from the project security rules, `/build`, `/qa` and `/security-check`._
+_Reached from `docs/kit/guides/security.md`, `/build`, `/qa` and `/security-check`._
 
 A `<form>` left to submit natively sends every field in the URL (`?email=…&password=…`), which
 leaks it into browser history, server logs and `Referer` headers. Next.js gives two correct paths:
@@ -168,7 +168,7 @@ live URL rather than against the config file.
 
 ## App-level rate limiting with Upstash Redis
 
-_Reached from the project security rules, `/architecture`, `/build` and `docs/production/rate-limiting.md` — the throttle keyed per IP and per account that the platform's own limits do not give you._
+_Reached from `docs/kit/guides/security.md`, `/architecture`, `/build` and `docs/production/rate-limiting.md` — the throttle keyed per IP and per account that the platform's own limits do not give you._
 
 ### 1. Install Dependencies
 ```bash
@@ -181,7 +181,7 @@ npm install @upstash/ratelimit @upstash/redis
 - Copy REST URL and token
 
 ### 3. Add Environment Variables
-Document the names in the example env file; the user puts the real values into `.env.local` — you never write that file (security rules → the real env file).
+Document the names in the example env file; the user puts the real values into `.env.local` — you never write that file (SEC-01).
 ```bash
 # .env.local.example
 UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
@@ -237,7 +237,7 @@ export async function POST(request: NextRequest) {
 ```
 
 ### 5b. Credential routes — key by IP **and** by account
-This is the hard gate from the security rules and `/build`: anything that checks a credential — login,
+This is the hard gate from SEC-04 in `docs/kit/guides/security.md` and `/build`: anything that checks a credential — login,
 signup, password reset, an invite code, a share-link password — is throttled on **two** counters. The IP
 counter stops one host hammering many accounts; the account counter stops an attacker rotating IPs
 against one account. One counter alone leaves the other attack unlimited, and a per-IP throttle on a login

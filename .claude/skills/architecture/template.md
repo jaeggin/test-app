@@ -40,6 +40,19 @@ Write "none" where a category does not apply.
 - Packages:
 - Route, shell and external-service attach points:
 
+## Quality and Failure Behavior
+
+Include only scenarios this feature actually promises; reuse the AC/EC IDs from `spec.md`.
+
+| AC/EC | Conditions and measurable bound | Mechanism | Planned verification |
+| --- | --- | --- | --- |
+| _AC-ID_ | _Load/device/network and expected result_ | _What makes it hold_ | _Targeted evidence, not a claimed pass_ |
+
+Define expected domain/validation errors, denial, external failure and unexpected defects at the
+relevant interfaces; state propagation, safe user message, logging owner and recovery/retry limits.
+For model integrations: adapter input/output, output validation/encoding, fake-test seam,
+timeouts/cost limits and permitted data sharing. Omit inapplicable categories.
+
 ## Data Model
 
 Describe what information is stored, in plain language (no SQL, no code) — but name every field with its type and constraints, and state who owns each record:
@@ -98,6 +111,10 @@ design needs none.
 Log every meaningful technical choice and WHY, in plain language a PM can follow —
 reasoning, not implementation detail. This is the technical half of the Decision Log
 (product decisions live in `spec.md`).
+
+Link project-wide ADR IDs from `docs/decisions.md` (or the project's existing register); do not
+copy their bodies. Flag load-bearing choices with impact, uncertainty and reversal cost. Preserve
+alternatives/consequences when superseded; optional specialist review is the user's decision.
 
 | Decision | Rationale | Alternative considered | Trade-off | Date |
 | --- | --- | --- | --- | --- |

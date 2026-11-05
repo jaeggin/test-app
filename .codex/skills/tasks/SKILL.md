@@ -24,6 +24,8 @@ Break the approved feature design into an ordered, traceable task list that `/bu
 Walk the `design.md` Component Tree, Data Model, and API design, and turn each into the concrete work steps needed to build it. Map every step to the **AC-ID(s)** it satisfies.
 
 **Coverage check:** every AC in `spec.md` must be covered by at least one task. An AC with no task is a hole in the plan — add a task or explain the gap before continuing.
+Include the design's quality/error/model-output verification under the same AC/EC IDs, using
+targeted tests or measurements. Do not create a second quality checklist or default live-model test.
 
 **Placement check:** derive `files:` from `design.md` → Code Structure and Footprint, using the
 project/framework convention. A missing module responsibility or an import outside the agreed

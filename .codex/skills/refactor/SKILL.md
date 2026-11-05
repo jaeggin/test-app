@@ -40,6 +40,9 @@ Work on a branch: `refactor/<file-stem>`. Then:
 - **A 2000-line file.** Do not one-shot it. Extract the smallest coherent responsibility, verify, commit — and end the session there if attention is running low; the facade means a half-done split is still a consistent, shippable state. The next session takes the next slice.
 
 ## What NOT to do
+- Never create or enlarge suppressions, baselines, ignores, skipped tests or relaxed rules to make
+  the refactor green. A faulty check needs evidence and explicit review of the exact change;
+  prior authorization for that correction counts. Read `docs/kit/guides/checks.md` → Changes to verification.
 - Do NOT change any observable behaviour — including error messages, ordering, and timing where an AC or test names them
 - Do NOT touch callers, rename exports, or change signatures — the facade keeps the surface identical
 - Do NOT fix bugs, delete "dead" code, or bump dependencies in the same session

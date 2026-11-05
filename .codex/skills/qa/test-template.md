@@ -34,6 +34,10 @@ This is the content of the standalone file `features/PROJ-X-*/qa-report.md` (a r
 
 ### Security Audit Results
 
+_Select controls per runtime from `docs/kit/guides/security.md`; cite SEC IDs in findings and
+reference approved exceptions. HTTP/browser lines do not apply to local native/CLI surfaces;
+state the reason instead of inventing a server. Native accounts still need auth/access checks._
+
 _Each line needs evidence or a NOT VERIFIED reason. `/qa` has no browser — anything that requires DevTools, real rendering, or a second browser engine is NOT VERIFIED here by definition._
 
 - [ ] Authentication: Cannot access without login — evidence: [curl of the protected route / middleware file:line]
@@ -71,6 +75,7 @@ _Everything marked `[!]` above, collected — so nobody mistakes "not checked" f
 - **Severity:** Critical | High | Medium | Low
 - **Status:** Open | Deferred | Fixed (<date>, re-verified)
 - **Class:** [the kind of mistake, e.g. "POST routes without input validation"]
+- **Control / AC:** [SEC-ID where relevant; owning AC/EC-ID]
 - **Sweep:** `[command that finds every instance]` — N hits [· allowed: …] | none
 - **Steps to Reproduce:**
   1. Go to [page]

@@ -197,7 +197,7 @@ There is no "un-push". A code rollback puts the old code back and leaves the new
 
 ## What Supabase Auth rate-limits for you, and what it does not
 
-_Reached from the project security rules, `/architecture` and `/security-check`._
+_Reached from `docs/kit/guides/security.md`, `/architecture` and `/security-check`._
 
 Supabase Auth throttles its **own** endpoints — that means a login going through
 `signInWithPassword`, `signUp` or `resetPasswordForEmail`, and nothing else. Two groups behave
@@ -254,7 +254,7 @@ above are `[user]` tasks with the dashboard path, ticked by the user.
 
 ## Row Level Security
 
-_Reached from the project security rules, `/build`, `/qa` and `/security-check`._
+_Reached from `docs/kit/guides/security.md`, `/build`, `/qa` and `/security-check`._
 
 RLS is this project's data-layer enforcement — the second, independent check behind the one in
 application code. Every table a feature creates has RLS **enabled**, with policies covering exactly

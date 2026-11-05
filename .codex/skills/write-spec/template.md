@@ -36,9 +36,10 @@
 - **EC-2** — How do we handle...?
 
 ## Technical Requirements (optional)
-- Performance: < 200ms response time
-- Security: Authentication required
-- Browser Support: Chrome, Firefox, Safari
+<!-- Material quality requirements are AC/ECs above, with stimulus, load/environment, observable
+     response, measurable bound and measurement method. Link their IDs here; do not duplicate
+     the contract or invent an SLA. Platform/browser support only where relevant. -->
+- Quality scenarios: [AC/EC references and relevant operating assumptions]
 
 ## Open Questions
 <!-- Unresolved questions from the spec interview. Close them in /refine when answered. -->

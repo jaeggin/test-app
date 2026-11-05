@@ -104,6 +104,9 @@ Same as in `/init` and `/write-spec`:
 - **Stop when you have full clarity** on what needs to change
 
 ## After the Interview: Update the Spec
+For changed quality goals, errors, model behavior or domain terms, read the relevant sections of
+`docs/kit/guides/design.md`. Keep the same AC/EC trace and preserve superseded decision reasoning.
+Conflicting project-wide ADRs require an explicit replacement decision, not a silent local override.
 
 Make the changes to `features/PROJ-X-*/spec.md`. After saving, re-read the file to verify the changes are present.
 

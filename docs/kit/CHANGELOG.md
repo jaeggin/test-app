@@ -6,6 +6,50 @@ not your project's. `npx create-ai-eng-app update` also prints the entries since
 
 ## [Unreleased]
 
+## [0.7.7] — 2026-11-01
+
+### Changed
+- **A compact always-loaded rule core, with detailed security and phase guidance read on demand.**
+  Working-language, routing, tracking and test-budget invariants remain in the core. Shared guides
+  select auth/HTTP/browser controls per affected runtime, including native apps with accounts and
+  mixed-runtime projects. Local native/CLI tools acquire no web stack. User memory outside the
+  managed block remains untouched; all seven agent layouts use the same authored rules.
+- **Decisions keep their alternatives and consequences, including after cleanup.** Superseded
+  entries link their replacement. A project-wide register and product glossary are created only
+  for real decisions/ambiguous terms and loaded where needed; load-bearing choices name reversal
+  costs and can receive specialist review at the user's discretion.
+
+### Added
+- **Closing-check coverage records individual stages, shared by build and deploy.** A read-only
+  planner appends only missing steps/runtimes to partial aggregates and rejects unknown coverage.
+  `/init checks` confirms existing aggregates once after upgrade; project scripts stay owned by
+  the project. Task/fix loops keep single-file checks, per-level suites stay with the build owner,
+  and QA retains one independent suite per runtime and its Deferred stop condition.
+- **Quality, error and model-integration guidance follows the existing AC → Task → Test chain.**
+  PRDs separate operating assumptions from constraints; material quality goals specify conditions
+  and measurable evidence. Designs define safe errors/recovery and model adapters with validated
+  outputs, bounded costs/failures and deterministic fake tests. Server-only Vitest tests keep the
+  production marker and use a test-local mock; the real Next.js build proves the import boundary.
+- **Optional GitHub Actions setup and stable security control references.** `/init ci` and
+  `/verify-setup ci` prepare a project-specific quality workflow on request. The CI pack requires
+  evidence for the exact candidate commit and distinguishes workflow presence from repository
+  enforcement; no pipeline is installed by default. SEC IDs link designs, QA findings and explicit
+  exception records without enlarging the always-loaded security rules.
+
+- **A project without a linter gets the usual one for its language recommended — once, never installed.**
+  `/init` and `/verify-setup` first look for a configured linter the install could not detect
+  (`ruff`, PHPStan, SwiftLint, ktlint, `golangci-lint` …). Built-in commands (`dart analyze`, `go vet`,
+  `cargo clippy`, `./gradlew lint`) are proposed directly; anything to install is a hand-off, and
+  a declined recommendation is recorded with its reason so it is not raised again.
+
+### Fixed
+- **Older no-mode stamps no longer receive a fictitious `npm run check` during update.** Commands
+  are detected from actual scripts; unknown aggregate scope/stages remain null until confirmed.
+- **Claude's eight obsolete env/example `Write(path)` rules are removed on update and new installs.**
+  Equivalent Edit rules retain their intent, including an example rule moved to ask. Other user
+  permissions survive; CI/agent/check-guide definitions gain review gates. Suppressions, baselines
+  and weakened checks may not be used merely to get green. Grok's different permission syntax stays.
+
 ## [0.7.6] — 2026-10-15
 
 ### Added

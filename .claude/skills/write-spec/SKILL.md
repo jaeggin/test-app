@@ -28,6 +28,10 @@ Interview the user until you reach a **complete shared understanding** of the fe
 - **No fixed question limit** — stop when you truly understand the feature, not after N questions
 
 ## Before Starting
+Read `docs/kit/guides/design.md` → Operating conditions and quality / Product vocabulary. Reuse
+relevant confirmed terms from `docs/glossary.md` when present. Capture material quality goals as
+ordinary AC/ECs with conditions and measurable evidence; no separate quality-ID chain. Select
+applicable controls from `docs/kit/guides/security.md` before specifying security-sensitive behavior.
 1. Read `docs/PRD.md` — understand the project vision and target users
 2. Read `features/INDEX.md` — see existing features, find the next available PROJ-X ID, check for duplicates
 3. Check what already exists, **in the layout this project actually uses**. For a project the kit scaffolded: `git ls-files src/components/` and `git ls-files src/app/api/`. For any other project those paths return nothing and say nothing about it — read `.ai-eng-kit` → `mode`, `stack` and `commands`, and look where this project keeps its code. An unverified empty result is not evidence of absence.
@@ -132,6 +136,9 @@ Do not paraphrase legal reasoning into the spec: the spec says what the app must
 If the feature touches no personal data, say so in one line and move on — that is a valid outcome, not a skipped step.
 
 **If this feature lets someone log in, sign up, or reset a password, abuse protection belongs in the contract.**
+For remote accounts on native platforms, use the same behavioral guarantees with platform-supported
+mechanisms (SEC-03/04); do not assume HTML forms. Local OS unlock/biometrics use their platform's
+control, not invented per-IP limits or a web CAPTCHA.
 With `quality: prototype` (`.ai-eng-kit`), first propose a stand-in instead: a user switch with a few fixed demo users, no credentials. Most prototypes need someone to *be* logged in, not a login. If the user wants a real one anyway, everything below applies unchanged.
 
 Any form that checks a credential can be hammered: an attacker tries thousands of passwords against one account, or one common password against thousands of accounts. Nobody notices, because every single request looks like a normal login. This is not a production-hardening detail to add later — it is part of what "the login works" *means*, so it goes into the spec as ordinary acceptance criteria and rides the AC → Task → Test chain like everything else.
@@ -214,6 +221,8 @@ Examples (English project):
 AC- and EC-IDs are stable: once assigned, never renumber them — downstream tasks and tests reference them. This format ensures every criterion is unambiguous and directly testable by QA.
 
 ## If the feature integrates AI — three checks before the spec is done
+Also read `docs/kit/guides/design.md` → Model integrations: specify observable failure/recovery,
+data sharing and output limits now; the technical adapter belongs to `/architecture`.
 When the feature calls a model (an LLM API, generation, scoring, recommendations) and `.ai-eng-kit` →
 `law` includes `ai-act` — or the product ships to EU users, in which case recommend recording it
 (`/init`'s law question):

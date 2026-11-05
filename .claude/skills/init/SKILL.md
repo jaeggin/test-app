@@ -35,9 +35,16 @@ When the argument is already a rich briefing (not a one-line idea), do **not** m
 4. When no blocking gaps remain, go straight to the PRD draft and its review checkpoint — don't invent filler questions.
 
 ## Before Starting
-**`/init checks` is a focused re-entry in either mode, even when the PRD is complete.** Follow
-*Record the check command* below, then stop. It changes only the check-related registry values and
-their mirror in the canonical memory file; it does not restart the product interview.
+**`/init checks` and `/init ci` are focused re-entries in either mode, even when the PRD is complete.**
+Follow *Record the check command* below (`ci` includes the CI choice), then stop. Change only the
+check/CI-related registry values and their mirror in the canonical memory file; do not restart
+the product interview. Existing approved values count; ask only missing material facts.
+
+When this run makes a cross-feature choice (backend, environment strategy, region or similar),
+read `docs/kit/guides/design.md` → Project-wide decisions. Record the actual choice, alternatives,
+consequences and load-bearing uncertainty in the existing register or `docs/decisions.md`; link it
+from PRD Constraints. Create no empty register. In brownfield work, distinguish confirmed current
+facts from new choices; never invent historical reasons or rejected alternatives.
 
 0. Read `.ai-eng-kit` → `mode`. If it is `existing`, the kit was **added to a project that already runs** — skip the Discovery Interview entirely and follow "Existing Project" below instead. A missing key means `new`.
 1. Read `docs/PRD.md` — check if it's still the empty template
@@ -51,6 +58,9 @@ their mirror in the canonical memory file; it does not restart the product inter
 → In `mode: existing`: this is a **re-entry, not a stop.** `/verify-setup` (5b), `/qa` and the security rules send the user here whenever `.ai-eng-kit` still holds a `null` that the first run could not fill — the person who knew the start command was not in the room. Read `.ai-eng-kit` and list what is still open: `platform`, `commands.dev`, `probe.kind`, any `stack.*` the first run left `null`, every required `null` inside a `layers[]` entry (an optional `commands.check: null` is complete), question 5 once when `layers` is `[]` and the map's *Language and runtime* or a second manifest in its own folder names a second runtime (a project updated into the layers feature was never asked), question 6 when the entries in `features/` carry a different prefix than `featurePrefix` records, `law` where the PRD says the product holds personal data, and `quality` when it is `null` or the user came to change it. Ask **only** those, one per turn, proposing the answer the map or the project's own files give (the rules under "Existing Project" → *The four questions* apply unchanged), record what the user confirms, mirror it into the memory file → How This Project Runs. Then, with a map: any feature in `docs/codebase/features.md` that has no row in `features/INDEX.md` (a `/map --refresh` found it) is proposed as a `Mapped` row exactly the way the first run did (→ *Confirm the feature map*) — new rows only, existing rows untouched. Then stop. Do not re-ask what already has an answer, do not touch the PRD or the feature map. If nothing is open, say so — "Everything `/init` records is on file" — and hand off as above.
 
 ## Existing Project (`mode: existing`)
+Read `docs/kit/guides/design.md` → Operating conditions and quality / Product vocabulary. Propose
+relevant operating assumptions from the map/briefing and confirm ambiguous terms with the user.
+This is still a record of an existing product, not a new product interview.
 
 A greenfield interview is the wrong instrument here. The product already exists, the stack decisions were made long ago, and the code is the source of truth — inventing a vision for something that already ships is how a PRD ends up describing a product nobody built.
 
@@ -77,7 +87,7 @@ Your job is narrower and more useful: **record how this project runs, and confir
 7. **How finished does it have to be?** The quality question from *Mandatory: Quality Stance* below. Propose `standard` for a product that already runs; `prototype` is for something nobody real uses yet.
 
 ### Record the answers
-- Write them into `.ai-eng-kit`: `platform` (`web`, `mobile`, `desktop`, `mcp`, `cli`, `extension`, `other` — **`desktop` is a native app the user installs**, a Mac or Windows app, not a web app in a wrapper), the confirmed `stack`, `commands`, and `probe`. Keep the JSON valid and change nothing else in the file — `law` (next bullet), `stack.deploy` (the bullet after), `layers` (question 5), `featurePrefix` (question 6) `quality` (question 7) and `checkLayers` (the check scope below) are the only other keys this skill writes.
+- Write them into `.ai-eng-kit`: `platform` (`web`, `mobile`, `desktop`, `mcp`, `cli`, `extension`, `other` — **`desktop` is a native app the user installs**, a Mac or Windows app, not a web app in a wrapper), the confirmed `stack`, `commands`, and `probe`. Keep the JSON valid and change nothing else in the file — `law` (next bullet), `stack.deploy` (the bullet after), `layers` (question 5), `featurePrefix` (question 6), `quality` (question 7), `checkLayers` and `checkCoverage` (the check scope below) are the only other keys this skill writes.
 - **If the project holds personal data, ask which law applies** — the multi-select question from "Data Protection Law and Stance" below — and record it in `.ai-eng-kit` → `law` and as `Data protection law:` in PRD Constraints, so `/dsgvo` does not have to ask.
 - **Question 4 is recorded too, not just asked:** the host or release path as one word into `stack.deploy` (`vercel`, `hostinger`, `heroku`, `eas`, `fastlane`, `docker`, … — `null` if there is none yet), and a `Hosting:` line plus a `Data region:` line under `docs/PRD.md` → Constraints. `/deploy` and `/dsgvo` read exactly those, so the user is not asked the same thing twice.
 - **Question 5 is recorded as `layers`:** one entry per confirmed runtime — `name`, `root`, `kind`, `language`, `framework`, `commands` (`dev`/`test`/`lint`/`build`, optional `check`), `probe` (`kind`/`baseUrl`), `packs` (paths under `docs/stacks/`, **existing files only** — a pack the user names that is not there is a hand-off for whoever writes it, never a file you create). The primary stack stays in `stack`; `layers` lists only the additional runtimes. Every skill that touches files under a layer's `root` reads that layer's `packs` and runs its `commands` (`AGENTS.md` → Layers).
@@ -85,28 +95,24 @@ Your job is narrower and more useful: **record how this project runs, and confir
 
 ### Record the check command
 
-Read the project's actual scripts, CI/build files and packs; propose the real aggregate, if it has
-one, as `commands.check`. This is optional: `null` means use the recorded individual lint/test/build
-commands, not that those checks may be skipped. Never invent an npm script in a non-npm project.
-Confirm what the command runs and whether it includes additional runtimes. If the user already
-approved these exact definitions and their coverage, record them directly.
+Read `docs/kit/guides/checks.md` for the shared contract. Inspect actual scripts, CI/build files
+and packs; propose `commands.check`, its runtime scope (`checkLayers`) and **stage coverage**
+(`checkCoverage`). A command called check may run only lint: never infer tests/build from its name.
+Record partial coverage honestly; the planner appends missing individual steps exactly once.
+Unknown coverage stays null until confirmed, even if `checkLayers: []` is already recorded.
 
-- Record `commands.check` and `checkLayers` (the names from `layers` it includes; `[]` for primary
-  only). An unknown scope is `null` and must be resolved before `/build` uses the aggregate.
-- Every additional runtime may have its own `commands.check`, run from its `root`, covering only
-  that runtime. A cross-runtime aggregate is recorded at the top level with `checkLayers`.
-- Keep individual `commands.test`, `commands.lint`, `commands.build` accurate too: QA uses the test
-  command without the aggregate. Explicitly absent build/lint steps may be `false`, with the reason
-  in **How This Project Runs**; `null`/missing remains unknown. Tests never become optional through
-  this shortcut. For a Next.js scaffold all three steps apply.
-- Mirror the values and coverage into **How This Project Runs**. Preserve every other registry
-  value. A current kit scaffold already records its standard check and `checkLayers: []`; do not
-  re-ask it at initialization. When adding a layer, inspect aggregate coverage again and confirm
-  it once, so a monorepo test/build is never repeated by each covered layer.
+Keep individual lint/test/build commands accurate; record typecheck/structure when required and
+explicit absence with reasons as the guide describes. A runtime with no lint command gets the guide's
+recommendation once (→ *A runtime without a linter*) before you record `false`. Layer-local aggregates get their own stage
+array in the layer's `checkCoverage`. Mirror commands/coverage into **How This Project Runs**.
+Current scaffolds already record all five standard stages: do not ask again for unchanged facts.
+Older/detected aggregates need one confirmation; adding a layer reopens only its relevant scope.
+Run the read-only planner to confirm a complete, non-overlapping plan, not the tests themselves.
+Without Node, resolve the same rules manually. No aggregate means `checkLayers: []`,
+`checkCoverage: null`; individual checks remain required. Never invent npm tooling in native apps.
 
-Use this section in the existing-project interview when recording commands and layers as well.
-With no aggregate, record `checkLayers: []`. On re-entry, resolve an unknown scope when an aggregate
-and layers are recorded, without reopening unrelated questions.
+If the user requests GitHub Actions, confirm `stack.ci: github-actions` and direct setup through
+`/verify-setup ci` using `docs/stacks/ci-github-actions.md`; do not install a pipeline by default.
 
 ### Confirm the feature map (only with `docs/codebase/features.md`)
 The map proposes the features the product **already has**, sliced by rules the user never sees. Put the list to them as a whole, names and one sentence each — never the slicing:
@@ -126,6 +132,9 @@ What they tell that is not on the map is a gap → `Roadmap`, via `/write-spec` 
 **Record it:** every confirmed feature becomes a row in `features/INDEX.md` with status **`Mapped`** — Feature cell is the name only, Description its own cell (with *to check* where it applies), Spec cell empty (no folder yet; `/reverse-spec` creates it). The confirmed order goes into the **Build order** line; `Next Available ID` moves past them. Names and descriptions in the working language.
 
 ### Then write a short PRD — and fill what the map can fill
+Separate confirmed constraints from operating assumptions (load/data ranges, connectivity,
+outage/data-loss tolerance and provider limits where relevant), with source/owner and revisit
+trigger. Unknown targets stay open; do not invent an SLA or block unrelated setup to collect one.
 `docs/PRD.md`, describing the product **as it is**, not as you would design it: what it does, who for, the constraints that already hold (stack, hosting, compliance, anything the user named as fixed). Keep it short. It exists so `/write-spec` and `/architecture` have an anchor — it is not a rewrite of the product's history. Add a section **What already exists** listing the confirmed features with their evidence in one line each, marked *read from the code, not verified* — `/reverse-spec` is what verifies.
 
 Skip everything a greenfield project decides and this one already has: the Backend Decision, the Design System question, the app-shell sketch as a *design*. They are settled in the code. What the map can state, write down **from the map, with the source named** — and where it cannot, leave the template empty rather than filling it from a skim (an inaccurate map is worse than a missing one, because `/architecture` treats it as true):
@@ -145,6 +154,9 @@ Present what you recorded and end your turn with a clear approval question, e.g.
 Only after approval, save the files. Then hand off.
 
 ## Interview Phase
+Read `docs/kit/guides/design.md` → Operating conditions and quality / Product vocabulary when
+capturing the product's constraints and terms. Use the existing briefing/map first; ask only
+material gaps, not a generic scale questionnaire. Resolve ambiguous domain terms with the user.
 
 *(New projects only. For `mode: existing`, use the section above.)*
 
@@ -305,6 +317,9 @@ Once you have a complete understanding, write `docs/PRD.md` with:
 - **Core Features (Roadmap):** two or three sentences — what the MVP must do, what deliberately comes later. **No feature table here**: the feature map lives in `features/INDEX.md` and only there, so nothing has to be kept in sync
 - **Success Metrics:** Measurable outcomes
 - **Constraints:** Timeline, team, budget, technical limitations
+- **Operating Conditions and Assumptions:** Relevant load/data ranges, connectivity, outage/data-loss
+  tolerance and provider limits. Separate confirmed constraints from assumptions with owner/revisit
+  trigger; do not invent precision or an SLA. Follow the same distinction in an existing product's PRD.
 - **Non-Goals:** What will NOT be built in this version
 
 **Review checkpoint — STOP here.** Present the draft PRD in the chat (do not save it yet) and end your turn with a clear approval question, e.g.:
@@ -404,7 +419,7 @@ This is project setup, not a feature — but it belongs to initialization, so it
 - [ ] If the project holds personal data: `law` recorded in `.ai-eng-kit` and `Data protection law:` in PRD Constraints
 - [ ] Every field the user could not answer is `null` **and** named in a hand-off message they can forward — never filled by a guess
 - [ ] The same values mirrored into the memory file's **How This Project Runs**
-- [ ] `.ai-eng-kit` still parses as JSON, and nothing outside `platform`, `stack`, `commands`, `checkLayers`, `probe`, `layers`, `featurePrefix`, `law` and `quality` was changed
+- [ ] `.ai-eng-kit` still parses as JSON, and nothing outside `platform`, `stack`, `commands`, `checkLayers`, `checkCoverage`, `probe`, `layers`, `featurePrefix`, `law` and `quality` was changed
 - [ ] `layers` recorded — `[]` when the user confirmed there is no second runtime; every `packs` path in it exists
 - [ ] `featurePrefix` matches what the entries in `features/` actually carry
 - [ ] `quality` recorded (`prototype`, `standard` or `strict`)

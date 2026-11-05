@@ -109,6 +109,11 @@ Most `/qa` runs are not the first one. A feature comes back from `/build` with t
 - The qa-report you produce keys every result back to these AC-IDs / EC-IDs (the AC → Task → Test chain). Unit and integration tests carry the bulk of that AC coverage; end-to-end browser tests are an optional top layer added later by `/e2e-tests` for critical journeys only.
 
 ### 2. Functional Verification
+For quality AC/ECs, use `design.md` → Quality and Failure Behavior and report actual conditions,
+measurement and bound against the same ID. If the environment/load cannot be reproduced, record
+NOT VERIFIED; a passing unit suite proves no performance/SLA claim. Check expected rejections,
+safe error display and recovery. Model cases use deterministic fake adapters unless a separate
+live evaluation was explicitly requested. Keep these probes scoped to the feature/diff.
 You have **no browser** (see the note above). So verify against what you can actually observe — the running app over HTTP, the test suites, and the source:
 
 - Test EVERY acceptance criterion (mark pass/fail) using: automated tests you run, requests against the running app (started once by the owner — see Independence — and probed the way `probe` says), and inspection of the implementing code
@@ -126,6 +131,10 @@ These belong to `/e2e-tests` or a human pass. Say so in the report instead of qu
 **For timing EC — two users at once, a forbidden status move, the same webhook twice — verify the guarantee, not just the behavior.** Provoking a real race from here is unreliable, and the single-user path passes whether or not the protection exists. So read the guarantee `design.md` named and confirm it in the code (on a `> Reconstructed from code` spec there is no `design.md` and no named guarantee — expected, not a fault: look for the protection in the code directly, and where none exists, that is a finding at the severity the lost or duplicated data would justify, not a skipped check): the unique constraint in the schema, the transaction wrapping both steps, the conditional update, the idempotency key on the handler. A guarantee the design promised and the code does not have is a **bug at the severity the lost or duplicated data would justify** — never a `NOT VERIFIED`, because this one *is* checkable from here.
 
 ### 3. Security Audit (Red Team)
+Read applicable controls in `docs/kit/guides/security.md` per affected runtime; cite stable SEC IDs
+in findings/exceptions. Auth applies to real native accounts too; HTTP/form/header checks apply
+only to actual HTTP/browser surfaces. Local OS unlock uses its platform control. Unknown capability
+needs clarification, not a silent skip. Keep the quality stance and re-verification stop rules below.
 These checks are independent of `/build`'s build-time security gates (RLS, auth, input validation) — defense in depth, not duplication. Audit as if those gates could have gaps.
 
 **With `quality: prototype` (`.ai-eng-kit`), run only these checks:** exposed secrets, secrets committed to git (`git log -p` for keys and tokens), and — for a feature with a real login, signup or password reset — brute force and credentials in the URL. Those follow the project forever; everything else here is reported as `[!] NOT VERIFIED — prototype`, so the gap stays visible and falls due when `/init` raises the stance.

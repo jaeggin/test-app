@@ -71,6 +71,10 @@ What this skill assumes, and what to do when the project does not match:
 The feature folder is the single source of truth: `spec.md` is the WHAT, `design.md` (authored by `/architecture`) is the HOW, and `tasks.md` (authored by `/tasks`) is the ordered build plan. Everything you build traces back to them via AC-IDs. `spec.md` is READ-ONLY during build — you never write to it. If reality forces a deviation from the design, you stop and flag it. You never silently redesign.
 
 ## Start by Reading
+Select the applicable `docs/kit/guides/security.md` controls for this feature and its runtimes.
+Read `docs/kit/guides/design.md` → Errors and recovery / Model integrations only where the design
+uses them, plus its referenced project-wide ADRs. Implement the agreed quality/failure contracts;
+do not introduce a new framework or run live-model tests by default.
 Before writing anything, read. Never assume contents from memory:
 1. The feature folder the user passed — `features/PROJ-X-*/spec.md` (the contract, READ-ONLY), `features/PROJ-X-*/design.md` (the technical design), and `features/PROJ-X-*/tasks.md` (the ordered, leveled task list).
 2. `features/INDEX.md` — current status, and what's already shipped so you don't duplicate it.
@@ -89,11 +93,13 @@ You build on a branch, never directly on `main`, so a half-finished build can't 
 
 The parallel `[P]` worktrees below branch off the current feature branch and integrate back into it. The feature stays on this branch through `/qa` and `/e2e-tests`; merging into `main` happens at `/deploy`.
 
+## Fixing a Bug — Reopen First
+A bug is code that breaks the feature's contract; the spec stays as it is (behaviour the spec never stated is a change — that is `/refine`). Whether the bug comes from `qa-report.md` or the user reports it in chat: an Approved or Deployed feature goes back to **In Review** in its INDEX status cell before you change code, and `/qa` confirms the fix. The branch rule above holds: a fix to a Deployed feature gets its own branch.
+
 ## Fixing Bugs from `qa-report.md`
 When the feature's `qa-report.md` lists bugs with `Status: Open` — or bugs with no `Status:` line at all — and every task in `tasks.md` is already checked off, this run fixes those bugs — not the task list. **`/build PROJ-X deferred`** fixes the `Deferred` ones instead: the batch the user parked. Name that list with its count before you start, and fix what the user confirms.
 
 - **A report from before bug statuses** carries a `Priority:` line instead of `Status:`, `Class:` and `Sweep:`. Every bug in it without a status counts as `Open`, unless the report itself says it was fixed. Where a bug has no `Class:` or `Sweep:`, work them out yourself — name the kind of mistake, write the search that finds every instance, run it — and put both into the commit message and the handoff, so `/qa` can re-run your search.
-- **Reopen first.** An Approved or Deployed feature goes back to **In Review** in its INDEX status cell (`general.md` → Change Routing). The branch rule above holds: a fix to a Deployed feature gets its own branch.
 - **Fix the class, not the place.** Every bug names its `Class:` and a `Sweep:` command. Run the sweep, fix every hit, run it again — nothing left beyond the exceptions the bug names. Where the sweep is `none`, search the feature's files for the same mistake before you call it fixed. Several bugs of one class are one fix.
 - **One test per class, red first** — it fails on the old code and passes on the fix, the same red proof every test you write here needs. Not one test per instance.
 - **Never edit `qa-report.md`.** A bug's status is `/qa`'s: it closes it when the re-verification confirms the fix. Name the bugs in the commit instead.

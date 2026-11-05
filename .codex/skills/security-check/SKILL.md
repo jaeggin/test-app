@@ -6,6 +6,9 @@ description: Non-destructive security check of your LIVE app - HTTPS, security h
 # Security Check
 
 ## Goal
+Load applicable controls from `docs/kit/guides/security.md` per affected runtime and use their
+stable SEC IDs in findings. HTTP/browser checks apply to those surfaces only; a native app with
+real accounts still needs auth/access protection. This remains a light, non-destructive live check.
 Verify the deployed app's security posture without touching or harming it. Run a set of read-only, non-destructive checks against the live site — is it HTTPS-only, are the security headers actually live, do protected pages really require login, is anything secret leaking to the browser, and — the big one — can an anonymous visitor read data that should be private. Report in plain language with a clear severity and the exact fix. Safe to run against production, and worth repeating periodically — a live app's security isn't one-and-done.
 
 ## Does this project match what this skill assumes?

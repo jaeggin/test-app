@@ -43,13 +43,7 @@
       "Edit(**/.env.production)",
       "Edit(**/.env.test)",
       "Edit(**/secrets/**)",
-      "Edit(**/.ssh/**)",
-      "Write(**/.env)",
-      "Write(**/.env.local)",
-      "Write(**/.env.*.local)",
-      "Write(**/.env.development)",
-      "Write(**/.env.production)",
-      "Write(**/.env.test)"
+      "Edit(**/.ssh/**)"
     ],
     "ask": [
       "Edit(/package.json)",
@@ -77,7 +71,16 @@
       "Bash(supabase db push:*)",
       "Bash(npx supabase db push:*)",
       "Bash(supabase migration repair:*)",
-      "Bash(npx supabase migration repair:*)"
+      "Bash(npx supabase migration repair:*)",
+      "Edit(/.claude/agents/**)",
+      "Edit(/.github/workflows/**)",
+      "Edit(/.github/CODEOWNERS)",
+      "Edit(/.jscpd*)",
+      "Edit(/.eslintignore)",
+      "Edit(/.dependency-cruiser-known-violations.json)",
+      "Edit(/docs/kit/checks/**)",
+      "Edit(/docs/kit/guides/**)",
+      "Edit(/docs/stacks/**)"
     ],
     "allow": [
       "Bash(npm install)",
@@ -111,9 +114,7 @@
       "Read(**/.env.local.example)",
       "Read(**/.env.example)",
       "Edit(**/.env.local.example)",
-      "Edit(**/.env.example)",
-      "Write(**/.env.local.example)",
-      "Write(**/.env.example)"
+      "Edit(**/.env.example)"
     ]
   }
 }
